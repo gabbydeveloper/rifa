@@ -1,0 +1,113 @@
+<div class="main-page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="grid">
+
+      <!-- TEXTO HERO -->
+      <div class="col-12 lg:col-6">
+        <h1 class="titulo">
+          Rifa de solidaridad
+        </h1>
+        <p class="subtitulo">
+          Por una buena causa ❤️
+        </p>
+      </div>
+    </div>
+    
+  </section>
+
+
+  <!-- INFO (siempre debajo del hero) -->
+  <section class="info-section">
+    <div class="grid">
+
+      <div class="col-12 lg:col-8">
+
+        <div class="textos">
+
+          <div class="info-box">
+            <i class="pi pi-heart-fill"></i>
+            <div>
+              <h3>Ayudemos a ayudar</h3>
+              <p>
+                Y gánate un premio.
+              </p>
+              <p-confirmdialog />
+              <a href="#" (click)="premios($event)">Mira los premios aquí</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FORM -->
+  <section class="form-section">
+    <div class="grid">
+
+      <div class="col-12 lg:col-6">
+
+        <div class="ticket-form">
+          <h2>🎫 Compra de boletos</h2>
+
+          <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+
+            <div class="field">
+              <label>Nro. de boletos:</label>
+              <p-inputNumber formControlName="cantidadBoletos" [showButtons]="true" [min]="0" [max]="10" class="w-full">
+              </p-inputNumber>
+              @if(getErrorMessage('cantidadBoletos') !== ''){
+                <p-message severity="error" size="small" variant="simple">{{ getErrorMessage('cantidadBoletos') }}</p-message>
+              }
+            </div>
+
+            <div class="field">
+              <label for="nombre">Nombre completo:</label>
+              <input pInputText id="nombre" formControlName="nombre" class="w-full">
+              @if(getErrorMessage('nombre') !== ''){
+                <p-message severity="error" size="small" variant="simple">{{ getErrorMessage('nombre') }}</p-message>
+              }
+            </div>
+
+            <div class="field">
+              <label for="apodo">Apodo:</label>
+              <input pInputText id="apodo" formControlName="apodo" class="w-full">
+            </div>
+
+            <div class="field">
+              <label for="email">Email:</label>
+              <input pInputText id="email" formControlName="email" class="w-full">
+              @if(getErrorMessage('email') !== ''){
+                <p-message severity="error" size="small" variant="simple">{{ getErrorMessage('email') }}</p-message>
+              }
+            </div>
+
+            <div class="field">
+              <label for="whatsapp">WhatsApp:</label>
+              <input pInputText id="whatsapp" formControlName="whatsapp" class="w-full">
+              @if(getErrorMessage('whatsapp') !== ''){
+                <p-message severity="error" size="small" variant="simple">{{ getErrorMessage('whatsapp') }}</p-message>
+              }
+            </div>
+
+            <p-button type="submit" label="Grabar y generar boletos" icon="pi pi-heart" styleClass="w-full">
+            </p-button>
+          </form>
+          @if(nrosBoletos() !== '')
+          {
+          <div class="boletos">
+            <span>
+              <b>¡Gracias por ayudar!</b><br>
+              <p>Tus boletos quedan reservados.</p>
+              <b>{{ nrosBoletos() }}</b>
+            </span>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
