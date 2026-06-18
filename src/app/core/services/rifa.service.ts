@@ -13,7 +13,7 @@ export class RifaService {
   private apiUrl = environment.apiUrl;
 
   crearDonante(datosDonante: Donante): Observable<DonanteResponse> {
-    return this.http.post<DonanteResponse>(`${this.apiUrl}donantes`, datosDonante);
+    return this.http.post<DonanteResponse>(`${this.apiUrl}donantes/donante`, datosDonante);
   }
 
   generaTicketsAleatorios(cantidad: number): Observable<RandomTicketsResponse> {

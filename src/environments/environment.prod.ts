@@ -1,5 +1,5 @@
 //Aquí poner la IP del servidor
 export const environment = {
   production: true,
-  apiUrl: 'https://192.164.10.3:8081/'
+  apiUrl: 'http://100.24.61.252:8081/'
 };
