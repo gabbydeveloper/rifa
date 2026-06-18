@@ -121,56 +121,69 @@ export class HomeComponent {
 
     this.isLoading = true;
 
-    // 1. Generar tickets aleatorios
-    this.rifaService.generaTicketsAleatorios(cantidad).subscribe({
-      next: (ticketsResp) => {
-        const tickets = ticketsResp.data;
+    this.rifaService.crearDonante(datosDonante).subscribe({
+      next: (donanteResp) => {
+        const idDonante = donanteResp.idSecuencial;
 
-        // 2. Crear donante
-        this.rifaService.crearDonante(datosDonante).subscribe({
-          next: (donanteResp) => {
-            const idDonante = donanteResp.idSecuencial;
+        this.rifaService.generaTicketsAleatorios(cantidad).subscribe({
+          next: (ticketsResp) => {
+            const tickets = ticketsResp.data;
 
-            // 3. Asignar tickets al donante
             this.rifaService.asignarTicketsDonante(idDonante, tickets).subscribe({
               next: () => {
                 this.isLoading = false;
+
                 if (tickets.length === 1) {
-                  this.nrosBoletos.set('El número de tu boleto es el: ' + tickets[0]);
+                  this.nrosBoletos.set(
+                    'El número de tu boleto es el: ' + tickets[0]
+                  );
                 } else {
-                  this.nrosBoletos.set('Los números de tus boletos son: ' + tickets.join(', '));
+                  this.nrosBoletos.set(
+                    'Los números de tus boletos son: ' + tickets.join(', ')
+                  );
                 }
+
                 this.formulario.reset({ cantidadBoletos: 1 });
+
                 setTimeout(() => {
                   this.nrosBoletos.set('');
                 }, 15000);
               },
               error: (err) => {
                 this.isLoading = false;
+
                 this.messageService.add({
                   severity: 'error',
                   summary: 'Error al asignar tickets',
-                  detail: err.error?.message || 'No se pudieron asignar los boletos. Intenta nuevamente.'
+                  detail:
+                    err.error?.message ||
+                    'No se pudieron asignar los boletos. Intenta nuevamente.'
                 });
               }
             });
           },
           error: (err) => {
             this.isLoading = false;
+
             this.messageService.add({
               severity: 'error',
-              summary: 'Error al registrar datos',
-              detail: err.error?.message || 'No se pudo crear el registro del donante.'
+              summary: 'Error al generar tickets',
+              detail:
+                err.error?.message ||
+                'No se pudieron generar los boletos. Puede que no haya suficientes disponibles.'
             });
           }
         });
       },
       error: (err) => {
         this.isLoading = false;
+        console.log(err.error?.message);
         this.messageService.add({
           severity: 'error',
-          summary: 'Error al generar tickets',
-          detail: err.error?.message || 'No se pudieron generar los boletos. Puede que no haya suficientes disponibles.'
+          summary: 'Error al registrar datos',
+          detail:
+            err.error?.message ||
+            'No se pudo crear el registro del donante.'
         });
       }
     });

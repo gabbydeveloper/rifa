@@ -1,11 +1,12 @@
 <div class="admin-container p-4">
-  <p-card header="🎟️ Administración de Tickets - Rifa Tino" class="shadow-3">
+  <p-card header="🎟️ Administración de Tickets - Rifa" class="shadow-3">
     <div class="flex justify-content-between align-items-center mb-3">
       <h2 class="text-xl font-bold">Tickets asignados</h2>
       <p-button icon="pi pi-refresh" [loading]="loading" (click)="cargarTickets()" label="Actualizar"
         styleClass="p-button-outlined"></p-button>
     </div>
 
+    <!-- Tabla para ver los tickets -->
     <p-table [value]="tickets()" [loading]="loading" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]"
       class="p-datatable-sm" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} tickets"
       [showCurrentPageReport]="true">
